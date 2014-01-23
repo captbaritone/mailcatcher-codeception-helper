@@ -16,7 +16,7 @@ features.
 First you need to download the helper into your `_helpers` directory:
 
     $ cd path/to/your/tests/_helpers/
-    $ wget http://github.com/path/to/MailCatcherHelper.php
+    $ wget https://github.com/captbaritone/mailcatcher-codeception-helper/blob/master/MailCatcherHelper.php
 
 Then enable it in your `acceptance.suite.yml` configuration and set the url and
 port of your site's MailCatcher installation:
