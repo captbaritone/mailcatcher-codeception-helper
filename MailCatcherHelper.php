@@ -50,7 +50,7 @@ class MailCatcherHelper extends \Codeception\Module
     public function seeInLastEmail($expected)
     {
         $email = $this->lastMessage();
-        $this->seeInEmail($id, $expected);
+        $this->seeInEmail($email, $expected);
     }
 
     /**
