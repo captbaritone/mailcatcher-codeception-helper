@@ -94,6 +94,19 @@ Example:
 * Param $email
 * Param $text
 
+### grabFromLastEmail
+
+Extracts a string from the last email based on a regular exporession.
+It searches the full raw text of the email: headers, subject line, and body.
+
+Example:
+
+    <?php
+    $I->grabFromLastEmail('@<strong>(.*)</strong>@');
+    ?>
+
+* Param $regex
+
 # License
 
 Released under the same liceces as Codeception: MIT
