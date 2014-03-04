@@ -70,8 +70,10 @@ class MailCatcherHelper extends \Codeception\Module
     }
 
     /**
-     * grabFromLastEmail
-     * Look for a regex in an email and return in
+     * grab From Last Email
+     * 
+     * Look for a regex in the email source and return it
+     * 
      * @return string
      * @author Stephan Hochhaus <stephan@yauh.de>
      **/
