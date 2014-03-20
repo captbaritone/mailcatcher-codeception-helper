@@ -1,3 +1,13 @@
+# Deprecated
+
+I've wrapped this helper up as a module which means it can be installed using
+Composer which makes more sense. Plese use the module instead:
+
+[Codeception MailCatcher
+Module](https://github.com/captbaritone/codeception-mailcatcher-module)
+
+
+
 # Codeception MailCatcher Helper
 
 This helper will let you test emails that are sent during your Codeception
