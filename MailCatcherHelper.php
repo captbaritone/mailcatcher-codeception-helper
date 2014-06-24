@@ -18,21 +18,22 @@ class MailCatcherHelper extends \Codeception\Module
      */
     protected $requiredFields = array('url', 'port');
 
-    public function _initialize() {
-        $url = $this->config['url'].':'.$this->config['port'];
+    public function _initialize()
+    {
+        $url = $this->config['url'] . ':' . $this->config['port'];
         $this->mailcatcher = new \Guzzle\Http\Client($url);
     }
 
 
-     /**
-      * Reset emails
-      *
-      * Clear all emails from mailcatcher. You probably want to do this before
-      * you do the thing that will send emails
-      *
-      * @return void
-      * @author Jordan Eldredge <jordaneldredge@gmail.com>
-      **/
+    /**
+     * Reset emails
+     *
+     * Clear all emails from mailcatcher. You probably want to do this before
+     * you do the thing that will send emails
+     *
+     * @return void
+     * @author Jordan Eldredge <jordaneldredge@gmail.com>
+     **/
     public function resetEmails()
     {
         $this->mailcatcher->delete('/messages')->send();
@@ -66,6 +67,22 @@ class MailCatcherHelper extends \Codeception\Module
         $email = $this->lastMessageFrom($address);
         $this->seeInEmail($email, $expected);
 
+    }
+
+    /**
+     * grab From Last Email
+     * 
+     * Look for a regex in the email source and return it
+     * 
+     * @return string
+     * @author Stephan Hochhaus <stephan@yauh.de>
+     **/
+    public function grabFromLastEmail($regex)
+    {
+        $email = $this->lastMessage();
+        $email_source = $email['source'];
+        preg_match($regex, $email_source, $matches);
+        return $matches[1];
     }
 
     // ----------- HELPER METHODS BELOW HERE -----------------------//
@@ -116,12 +133,9 @@ class MailCatcherHelper extends \Codeception\Module
     protected function lastMessageFrom($address)
     {
         $messages = $this->messages();
-        foreach($messages as $message)
-        {
-            foreach($message['recipients'] as $recipient)
-            {
-                if(strpos($recipient, $address) !== false)
-                {
+        foreach ($messages as $message) {
+            foreach ($message['recipients'] as $recipient) {
+                if (strpos($recipient, $address) !== false) {
                     return $this->emailFromId($message['id']);
                 }
             }
@@ -151,7 +165,7 @@ class MailCatcherHelper extends \Codeception\Module
      **/
     protected function seeInEmail($email, $expected)
     {
-        $this->assertContains($expected, $email['source'],  "Email Contains");
+        $this->assertContains($expected, $email['source'], "Email Contains");
     }
 
 }
