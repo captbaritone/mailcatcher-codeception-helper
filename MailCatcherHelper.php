@@ -2,9 +2,6 @@
 
 namespace Codeception\Module;
 
-// From: https://github.com/captbaritone/mailcatcher-codeception-helper
-
-
 class MailCatcherHelper extends \Codeception\Module
 {
     /**
