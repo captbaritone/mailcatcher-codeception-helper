@@ -1,9 +1,11 @@
-<?php namespace Codeception\Module;
+<?php
+
+namespace Codeception\Module;
 
 class MailCatcherHelper extends \Codeception\Module
 {
     /**
-     * @var \Guzzle\Http\Client
+     * @var \GuzzleHttp\Client
      */
     protected $mailcatcher;
 
@@ -20,22 +22,23 @@ class MailCatcherHelper extends \Codeception\Module
 
     public function _initialize() {
         $url = $this->config['url'].':'.$this->config['port'];
-        $this->mailcatcher = new \Guzzle\Http\Client($url);
+        $client = new \GuzzleHttp\Client(['base_url' => $url]);
+        $this->mailcatcher = $client;
     }
 
 
-     /**
-      * Reset emails
-      *
-      * Clear all emails from mailcatcher. You probably want to do this before
-      * you do the thing that will send emails
-      *
-      * @return void
-      * @author Jordan Eldredge <jordaneldredge@gmail.com>
-      **/
+    /**
+     * Reset emails
+     *
+     * Clear all emails from mailcatcher. You probably want to do this before
+     * you do the thing that will send emails
+     *
+     * @return void
+     * @author Jordan Eldredge <jordaneldredge@gmail.com>
+     **/
     public function resetEmails()
     {
-        $this->mailcatcher->delete('/messages')->send();
+        $this->mailcatcher->delete('/messages');
     }
 
 
@@ -65,7 +68,6 @@ class MailCatcherHelper extends \Codeception\Module
     {
         $email = $this->lastMessageFrom($address);
         $this->seeInEmail($email, $expected);
-
     }
 
     // ----------- HELPER METHODS BELOW HERE -----------------------//
@@ -80,7 +82,7 @@ class MailCatcherHelper extends \Codeception\Module
      **/
     protected function messages()
     {
-        $response = $this->mailcatcher->get('/messages')->send();
+        $response = $this->mailcatcher->get('/messages');
         $messages = $response->json();
         if (empty($messages)) {
             $this->fail("No messages received");
@@ -122,7 +124,7 @@ class MailCatcherHelper extends \Codeception\Module
             {
                 if(strpos($recipient, $address) !== false)
                 {
-                    return $this->emailFromId($message['id']);
+                   return $this->emailFromId($message['id']);
                 }
             }
         }
@@ -139,7 +141,7 @@ class MailCatcherHelper extends \Codeception\Module
      **/
     protected function emailFromId($id)
     {
-        $response = $this->mailcatcher->get("/messages/{$id}.json")->send();
+        $response = $this->mailcatcher->get("/messages/{$id}.json");
         return $response->json();
     }
 
